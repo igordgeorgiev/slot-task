@@ -1,5 +1,16 @@
+html {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    padding: 0px;
+}
+
 body {
-    overflow: hidden;
-    margin: 0 auto;
-    background-color: black;
+    height: inherit;
+    width: inherit;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #002c24;
 }

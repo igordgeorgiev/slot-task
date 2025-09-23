@@ -1,12 +1,11 @@
 import "./style.css";
-import { Application, Assets, AssetsManifest } from "pixi.js";
-import "@esotericsoftware/spine-pixi-v8";
-
-import { getSpine } from "./utils/spine-example";
-import { createBird } from "./utils/create-bird";
+import { Application, Assets, AssetsManifest, EventEmitter } from "pixi.js";
+import { Slot } from "./views/Slot";
 
 const gameWidth = 1280;
 const gameHeight = 720;
+
+export const dispatcher = new EventEmitter();
 
 console.log(
     `%cPixiJS V8\nTypescript Boilerplate%c ${VERSION} %chttp://www.pixijs.com %c❤️`,
@@ -31,45 +30,45 @@ console.log(
     async function loadGameAssets(): Promise<void> {
         const manifest = {
             bundles: [
-                { name: "bird", assets: [{ alias: "bird", src: "./assets/simpleSpriteSheet.json" }] },
-                {
-                    name: "spineboyData",
-                    assets: [{ alias: "spineboyData", src: "./assets/spine-assets/spineboy-pro.skel" }],
-                },
-                {
-                    name: "spineboyAtlas",
-                    assets: [{ alias: "spineboyAtlas", src: "./assets/spine-assets/spineboy-pma.atlas" }],
-                },
+                { name: "sheet", assets: [{ alias: "bird", src: "./assets/sheet.json" }] },
             ],
         } satisfies AssetsManifest;
 
         await Assets.init({ manifest });
-        await Assets.loadBundle(["bird", "spineboyData", "spineboyAtlas", "pixieData", "pixieAtlas"]);
+        await Assets.loadBundle(["sheet"]);
 
         document.body.appendChild(app.canvas);
 
+        window.onresize = ()=> resizeCanvas();
+
+        // const birdFromSprite = createBird();
+        //
+        // birdFromSprite.anchor.set(0.5, 0.5);
+        // birdFromSprite.position.set(gameWidth / 2, gameHeight / 4);
+
+        const slot = new Slot();
+
+        app.stage.addChild(slot);
         resizeCanvas();
-
-        const birdFromSprite = createBird();
-
-        birdFromSprite.anchor.set(0.5, 0.5);
-        birdFromSprite.position.set(gameWidth / 2, gameHeight / 4);
-
-        const spineExample = await getSpine();
-
-        app.stage.addChild(birdFromSprite);
-        app.stage.addChild(spineExample);
     }
 
     function resizeCanvas(): void {
-        const resize = () => {
-            app.renderer.resize(window.innerWidth, window.innerHeight);
-            app.stage.scale.x = window.innerWidth / gameWidth;
-            app.stage.scale.y = window.innerHeight / gameHeight;
-        };
+        const scaleFactor = Math.min(
+            window.innerWidth / gameWidth,
+            window.innerHeight / gameHeight
+        );
 
-        resize();
+        const newWidth = Math.ceil(gameWidth * scaleFactor);
+        let newHeight = Math.ceil(gameHeight * scaleFactor);
 
-        window.addEventListener("resize", resize);
+        if (window.innerHeight > window.innerWidth) {
+            newHeight = newWidth;
+        }
+
+        console.log("Resizing to w:" + newWidth + " h:" + newHeight);
+
+
+        app.renderer.resize(newWidth, newHeight);
+        app.stage.scale.set(scaleFactor);
     }
 })();
