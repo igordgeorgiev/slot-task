@@ -1,10 +1,10 @@
 # Slot Games Developer - Test assignment
 
-I used the following boilerplate: https://github.com/yordan-kanchelov/pixi-typescript-boilerplate
-
-The rest is build on top
-
 - `npm run start` - should be enough to start the game at localhost:8080
+
+To build the game I used the following very basic Pixi boilerplate: https://github.com/yordan-kanchelov/pixi-typescript-boilerplate
+It gives me base structure and webpack configuration for easy compilation buids.
+
 
 About the boilerplate: 
 
