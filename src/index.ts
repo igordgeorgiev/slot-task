@@ -6,6 +6,7 @@ import { GameController } from "./controllers/GameController";
 import { Wallet } from "./models/Wallet";
 import { Wins } from "./models/Wins";
 import { startBalance } from "./const/CFG";
+import set = gsap.set;
 
 export const gameWidth = 1280;
 export const gameHeight = 720;
@@ -35,7 +36,7 @@ console.log(
     async function loadGameAssets(): Promise<void> {
         const manifest = {
             bundles: [
-                { name: "sheet", assets: [{ alias: "bird", src: "./assets/sheet.json" }] },
+                { name: "sheet", assets: [{ alias: "sheet", src: "./assets/sheet.json" }] },
             ],
         } satisfies AssetsManifest;
 
@@ -75,6 +76,7 @@ console.log(
         stopBtn.on("pointerdown", () => {
             dispatcher.emit(FAST_STOP);
             stopBtn.eventMode = "none";
+            stopBtn.visible = false;
         });
 
         app.stage.addChild(stopBtn);
@@ -85,8 +87,14 @@ console.log(
 
             if(lockStop) return;
 
-            stopBtn.visible = true;
-            stopBtn.eventMode = "static";
+            //very stupid delay... I know
+            //but there is a race condition somewhere
+            //and I could not find it on time :(
+
+            setTimeout(()=> {
+                stopBtn.visible = true;
+                stopBtn.eventMode = "static";
+            }, 300)
         })
 
         dispatcher.on(UNLOCK_UI, ()=>{

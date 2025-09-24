@@ -16,13 +16,11 @@ export class GameController {
     ) {
         this.makeBalanceCheck();
         dispatcher.on(START_SPIN, this.spin, this);
-        dispatcher.on(FAST_STOP, this.fastStop, this);
     }
 
     public async spin(): Promise<void> {
         if (this.state !== "idle") return;
 
-        this.state = "spinning";
         dispatcher.emit(LOCK_UI);
 
         const betSuccessFull = this.wallet.placeBet();
@@ -41,6 +39,9 @@ export class GameController {
 
         this.slot.startSpin(result.stopPositions);
 
+        dispatcher.once(FAST_STOP, this.fastStop, this);
+        this.state = "spinning";
+
         await this.waitForReelStop();
 
         if (result.multi > 0) {
@@ -58,11 +59,11 @@ export class GameController {
 
         const currentResult = this.wins.getCurrentResult();
 
-        await this.waitForReelStop();
-
         if(currentResult) {
             this.slot.fastStop(currentResult.stopPositions);
         }
+
+        await this.waitForReelStop();
 
         this.state = "idle";
         dispatcher.emit(UNLOCK_UI);
@@ -71,11 +72,10 @@ export class GameController {
     private async waitForReelStop(): Promise<void> {
         return new Promise((resolve) => {
             const handler = () => {
-                dispatcher.off(REEL_STOPPED, handler);
                 resolve();
             };
 
-            dispatcher.on(REEL_STOPPED, handler);
+            dispatcher.once(REEL_STOPPED, handler);
         });
     }
 
