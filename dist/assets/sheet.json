@@ -1,0 +1,103 @@
+{"frames": {
+
+"PLAY.png":
+{
+	"frame": {"x":0,"y":0,"w":185,"h":185},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":185},
+	"sourceSize": {"w":185,"h":185}
+},
+"PLAY_DISABLED.png":
+{
+	"frame": {"x":0,"y":185,"w":185,"h":185},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":185},
+	"sourceSize": {"w":185,"h":185}
+},
+"REEL.png":
+{
+	"frame": {"x":0,"y":370,"w":140,"h":396},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":140,"h":396},
+	"sourceSize": {"w":140,"h":396}
+},
+"STOP.png":
+{
+	"frame": {"x":0,"y":766,"w":185,"h":185},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":185},
+	"sourceSize": {"w":185,"h":185}
+},
+"SYM1.png":
+{
+	"frame": {"x":0,"y":951,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+"SYM2.png":
+{
+	"frame": {"x":128,"y":951,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+"SYM3.png":
+{
+	"frame": {"x":0,"y":1079,"w":128,"h":126},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":126},
+	"sourceSize": {"w":128,"h":126}
+},
+"SYM4.png":
+{
+	"frame": {"x":128,"y":1079,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+"SYM5.png":
+{
+	"frame": {"x":0,"y":1207,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+"SYM6.png":
+{
+	"frame": {"x":128,"y":1207,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+"WIN_BG.png":
+{
+	"frame": {"x":0,"y":1335,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+}},
+"animations": {
+	"SYM": ["SYM1.png","SYM2.png","SYM3.png","SYM4.png","SYM5.png","SYM6.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "sheet.png",
+	"format": "RGBA8888",
+	"size": {"w":256,"h":1463},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:022dcf9b7ea769d00faba35c2ee0bd68:be8643709dfe7106dbc5823033944e8f:9c44ecd7e9a522007eaff2949095bc1d$"
+}
+}
