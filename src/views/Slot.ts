@@ -1,48 +1,40 @@
-import { Assets, Container, Sprite } from "pixi.js";
-import { dispatcher } from "../index";
-import { REELSET, SHOW_WIN, START_SPIN, STOP_SPIN } from "../const/Constants";
+import { Application, Assets, Container, Graphics, Sprite } from "pixi.js";
+import { dispatcher, gameHeight, gameWidth } from "../index";
+import { SHOW_WIN, START_SPIN, STOP_SPIN } from "../const/Constants";
 import { Reel } from "./Reel";
 
 export class Slot extends Container {
 	private reelsSpinning: number = 0;
     private reel: Reel;
     private spinBtn: Sprite;
+    private reelContainer: Container = new Container();
 
 	constructor() {
 		super();
-
-		// const numReels = 3;
+        this.addChild(this.reelContainer);
 
 		this.createReelBg();
 
         this.reel = new Reel();
-        this.addChild(this.reel);
+        this.reelContainer.addChild(this.reel);
+        this.reel.x = (this.reelContainer.width - this.reel.width) * 0.5;
+        this.reelContainer.position.set((gameWidth - this.reelContainer.width) * 0.5, (gameHeight - this.reelContainer.height) * 0.25);
 
-        // this.reel.spin();
-        // setTimeout(() => this.reel.stopOn(6), 4000);
         this.spinBtn = new Sprite(Assets.get("PLAY.png"));
-        this.spinBtn.position.set(500, 500);
+        this.spinBtn.position.set((gameWidth - this.spinBtn.width) * 0.5, gameHeight * 0.7);
         this.spinBtn.eventMode = "static";
         this.spinBtn.on("pointerdown", ()=> {
             this.reel.spin()
             setTimeout(() => this.reel.stop([5, 6, 7]), 3000);
         });
         this.addChild(this.spinBtn);
-		// this.reels = [];
-		// for (let reelIdx = 0; reelIdx < numReels; reelIdx++) {
-		// 	const reel = new Reel();
-		// 	reel.x = this.width * 0.205 + reel.width * 1.06 * reelIdx;
-		// 	reel.y = this.height * 0.35;
-		// 	this.addChild(reel);
-		// 	this.reels.push(reel);
-		// }
+
+
 
 
 		dispatcher.on(START_SPIN, this.startSpin, this);
 		dispatcher.on(STOP_SPIN, this.stopOnSymbols, this);
-		dispatcher.on(SHOW_WIN, () => {
-			// this.toggleSirenAnim(true);
-		});
+		dispatcher.on(SHOW_WIN, () => {});
 	}
 
 	private stopOnSymbols(stopSyms: number[]): void {
@@ -76,11 +68,14 @@ export class Slot extends Container {
 		// this.leverAnim.interactive = enabled;1
 	}
 
-	private createReelBg() {
+	private createReelBg(): void {
 		const bg = new Sprite(Assets.get("REEL.png"));
 
-		// bg.scale.x = 0.5;
-		// bg.scale.y = 0.5;
-		this.addChild(bg);
+        this.reelContainer.addChild(bg);
+
+        const mask = new Graphics().rect(bg.x, bg.y + bg.height * 0.015, bg.width, bg.height * 0.97).fill(0xff0000, 0.4);
+
+        this.reelContainer.addChild(mask);
+        this.reelContainer.mask = mask;
 	}
 }

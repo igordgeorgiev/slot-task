@@ -2,8 +2,8 @@ import "./style.css";
 import { Application, Assets, AssetsManifest, EventEmitter } from "pixi.js";
 import { Slot } from "./views/Slot";
 
-const gameWidth = 1280;
-const gameHeight = 720;
+export const gameWidth = 1280;
+export const gameHeight = 720;
 
 export const dispatcher = new EventEmitter();
 
@@ -40,16 +40,10 @@ console.log(
         document.body.appendChild(app.canvas);
 
         window.onresize = ()=> resizeCanvas();
-
-        // const birdFromSprite = createBird();
-        //
-        // birdFromSprite.anchor.set(0.5, 0.5);
-        // birdFromSprite.position.set(gameWidth / 2, gameHeight / 4);
+        resizeCanvas();
 
         const slot = new Slot();
-
         app.stage.addChild(slot);
-        resizeCanvas();
     }
 
     function resizeCanvas(): void {
