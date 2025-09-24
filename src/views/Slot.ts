@@ -1,6 +1,5 @@
 import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
-import { dispatcher, gameHeight, gameWidth } from "../index";
-import { SHOW_WIN } from "../const/Events";
+import { gameHeight, gameWidth } from "../index";
 import { Reel } from "./Reel";
 import { balancePrefix, moneyStyle, spinTime, winPrefix } from "../const/CFG";
 
@@ -20,8 +19,6 @@ export class Slot extends Container {
         this.resizeTxt();
         this.addChild(this.balanceText);
         this.addChild(this.winsText);
-
-        dispatcher.on(SHOW_WIN, () => {});
     }
 
     private createReel() {
