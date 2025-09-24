@@ -1,7 +1,9 @@
 import { Container } from "pixi.js";
 import gsap from "gsap";
-import { REELSET } from "../const/Constants";
+import { REELSET } from "../const/CFG";
 import { Symbol } from "./Symbol";
+import { dispatcher } from "../index";
+import { REEL_STOPPED } from "../const/Events";
 
 type Mode = "idle" | "spinning";
 
@@ -122,12 +124,7 @@ export class Reel extends Container {
         await gsap.to(this, { y: dipY, duration: 0.12, ease: "power1.out" });
         await gsap.to(this, { y: startY, duration: 0.22, ease: "power2.out" });
 
-        // stop callback if you need it here
-    }
-
-
-    getVisibleIds(): string[] {
-        return [this.ids[1], this.ids[2], this.ids[3]];
+        dispatcher.emit(REEL_STOPPED);
     }
 
     private randomId(): string {
@@ -150,11 +147,6 @@ export class Reel extends Container {
         }
     }
 
-    /**
-     * Advance band by px. On each wrap:
-     *  - If stopping (insertionQueue != null), insert from the queue (foreshadow finals).
-     *  - Else insert random.
-     */
     private advanceWithQueue(px: number) {
         if (px <= 0) return;
 
@@ -162,7 +154,7 @@ export class Reel extends Container {
         while (this.yOffset >= this.symHeight) {
             this.yOffset -= this.symHeight;
 
-            // shift down 1: [top, v1, v2, v3, bottom] -> [newTop, top, v1, v2, v3]
+            //shift down 1: [top, v1, v2, v3, bottom] -> [newTop, top, v1, v2, v3]
             for (let i = this.reelSize - 1; i >= 1; i--) this.ids[i] = this.ids[i - 1];
 
             const nextId =
@@ -175,17 +167,5 @@ export class Reel extends Container {
         }
 
         this.positionSprites();
-    }
-
-    public destroy() {
-        if (this.ticker) { gsap.ticker.remove(this.ticker); this.ticker = null; }
-
-        if (this.stopTween)  { this.stopTween.kill(); this.stopTween = null; }
-
-        this.removeChildren();
-        this.symbols.forEach(s => s.destroy());
-        this.symbols = [];
-        this.ids = [];
-        this.mode = "idle";
     }
 }

@@ -1,9 +1,4 @@
-export const START_SPIN = 'START_SPIN';
-export const STOP_SPIN = 'STOP_SPIN';
-export const SHOW_WIN = 'SHOW_WIN';
-
-export const REEL_STOPPED = 'REEL_STOPPED';
-
+import { TextStyleOptions } from "pixi.js";
 
 export const REELSET = [
     "SYM1","SYM5","SYM1","SYM3","SYM4","SYM3","SYM2","SYM4","SYM3","SYM6",
@@ -18,3 +13,17 @@ export const REELSET = [
     "SYM3","SYM4","SYM1","SYM1","SYM1","SYM2","SYM6","SYM3","SYM2","SYM3",
     "SYM1","SYM5"
 ];
+
+export const spinTime = 3000;
+
+export const moneyStyle: TextStyleOptions = {
+    fontFamily: "Arial",
+    fontSize: 50,
+    fontWeight: "bold",
+    fill: 0xffa500,
+    stroke: { color: 0x000000, width: 3 },
+    align: "center",
+}
+
+export const winPrefix: string = "Win: $"
+export const balancePrefix: string = "Balance: $"

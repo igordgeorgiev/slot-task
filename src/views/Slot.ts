@@ -1,81 +1,70 @@
-import { Application, Assets, Container, Graphics, Sprite } from "pixi.js";
+import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
 import { dispatcher, gameHeight, gameWidth } from "../index";
-import { SHOW_WIN, START_SPIN, STOP_SPIN } from "../const/Constants";
+import { SHOW_WIN, STOP_SPIN } from "../const/Events";
 import { Reel } from "./Reel";
+import { balancePrefix, moneyStyle, spinTime, winPrefix } from "../const/CFG";
 
 export class Slot extends Container {
-	private reelsSpinning: number = 0;
-    private reel: Reel;
-    private spinBtn: Sprite;
+    private reel: Reel = new Reel();
     private reelContainer: Container = new Container();
+    private balanceText: Text = new Text({ text: balancePrefix + 0, style: moneyStyle, });
+    private winsText: Text = new Text({ text: winPrefix + 0, style: moneyStyle, });
 
-	constructor() {
-		super();
+    constructor() {
+        super();
         this.addChild(this.reelContainer);
 
-		this.createReelBg();
+        this.createReelBg();
+        this.createReel();
+        this.resizeTxt();
+        this.addChild(this.balanceText);
+        this.addChild(this.winsText);
 
-        this.reel = new Reel();
+
+        dispatcher.on(SHOW_WIN, () => {});
+    }
+
+    private createReel() {
         this.reelContainer.addChild(this.reel);
         this.reel.x = (this.reelContainer.width - this.reel.width) * 0.5;
-        this.reelContainer.position.set((gameWidth - this.reelContainer.width) * 0.5, (gameHeight - this.reelContainer.height) * 0.25);
+        this.reelContainer.position.set(
+            (gameWidth - this.reelContainer.width) * 0.5,
+            (gameHeight - this.reelContainer.height) * 0.25,
+        );
+    }
 
-        this.spinBtn = new Sprite(Assets.get("PLAY.png"));
-        this.spinBtn.position.set((gameWidth - this.spinBtn.width) * 0.5, gameHeight * 0.7);
-        this.spinBtn.eventMode = "static";
-        this.spinBtn.on("pointerdown", ()=> {
-            this.reel.spin()
-            setTimeout(() => this.reel.stop([5, 6, 7]), 3000);
-        });
-        this.addChild(this.spinBtn);
-
-
-
-
-		dispatcher.on(START_SPIN, this.startSpin, this);
-		dispatcher.on(STOP_SPIN, this.stopOnSymbols, this);
-		dispatcher.on(SHOW_WIN, () => {});
-	}
-
-	private stopOnSymbols(stopSyms: number[]): void {
-		// for (let reelIdx = 0; reelIdx < this.reels.length; reelIdx++) {
-		// 	const reel = this.reels[reelIdx];
-		// 	dispatcher.once(REEL_STOPPED, this.onReelStopped, this);
-		// 	const stopSymId = stopSyms[reelIdx];
-		// 	gsap.delayedCall(0.75 * reelIdx, () => {
-		// 		reel.stopOn(stopSymId);
-		// 	});
-		// }
-	}
-
-	private onReelStopped(): void {
-		this.reelsSpinning--;
-		if (this.reelsSpinning == 0) {
-			// dispatcher.emit(Constants.ALL_REELS_STOPPED);
-			this.setInputEnabled(true);
-		}
-	}
-
-	private startSpin(): void {
-		// for (let reelIdx = 0; reelIdx < this.reels.length; reelIdx++) {
-		// 	gsap.delayedCall(0.2 * reelIdx, this.reels[reelIdx].spin.bind(this.reels[reelIdx]), []);
-		// }
-        //
-		// this.reelsSpinning = this.reels.length;
-	}
-
-	private setInputEnabled(enabled: boolean): void {
-		// this.leverAnim.interactive = enabled;1
-	}
-
-	private createReelBg(): void {
-		const bg = new Sprite(Assets.get("REEL.png"));
+    private createReelBg(): void {
+        const bg = new Sprite(Assets.get("REEL.png"));
 
         this.reelContainer.addChild(bg);
 
-        const mask = new Graphics().rect(bg.x, bg.y + bg.height * 0.015, bg.width, bg.height * 0.97).fill(0xff0000, 0.4);
+        const mask = new Graphics()
+            .rect(bg.x, bg.y + bg.height * 0.015, bg.width, bg.height * 0.97)
+            .fill(0xff0000, 0.4);
 
         this.reelContainer.addChild(mask);
         this.reelContainer.mask = mask;
-	}
+    }
+
+
+    public startSpin(stopPositions: number[]): void {
+        this.reel.spin();
+        console.log("start spin");
+        setTimeout(() => this.reel.stop(stopPositions), spinTime);
+    }
+
+    public updateBalance(amount: number): void {
+        this.balanceText.text = balancePrefix + amount.toFixed(2);
+        this.resizeTxt();
+    }
+
+    public updateWins(amount: number): void {
+        this.winsText.text = winPrefix + amount.toFixed(2);
+        this.resizeTxt();
+    }
+
+    private resizeTxt() {
+        this.winsText.position.set(gameWidth * 0.05, gameHeight * 0.1);
+        this.balanceText.position.set(gameWidth - this.balanceText.width * 1.1, gameHeight * 0.1);
+    }
 }

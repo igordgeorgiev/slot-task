@@ -2,6 +2,7 @@ import { Assets, Container, Sprite } from "pixi.js";
 
 export class Symbol extends Container {
 	private img: Sprite;
+
 	constructor(symId: string) {
 		super();
 
@@ -14,8 +15,4 @@ export class Symbol extends Container {
 	public setId(symId: string): void {
 		this.img.texture = Assets.get(symId + ".png");
     }
-
-	private getRndSymId(): number {
-		return 1 + Math.floor(Math.random() * 5);
-	}
 }

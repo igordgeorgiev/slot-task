@@ -1,6 +1,10 @@
 import "./style.css";
-import { Application, Assets, AssetsManifest, EventEmitter } from "pixi.js";
+import { Application, Assets, AssetsManifest, EventEmitter, Sprite } from "pixi.js";
 import { Slot } from "./views/Slot";
+import { LOCK_UI, START_SPIN, UNLOCK_UI } from "./const/Events";
+import { GameController } from "./controllers/GameController";
+import { Wallet } from "./models/Wallet";
+import { Wins } from "./models/Wins";
 
 export const gameWidth = 1280;
 export const gameHeight = 720;
@@ -44,6 +48,25 @@ console.log(
 
         const slot = new Slot();
         app.stage.addChild(slot);
+
+        new GameController(new Wallet(100), slot, new Wins())
+
+        //Simple spin button
+        const spinBtn = new Sprite(Assets.get("PLAY.png"));
+        spinBtn.position.set((gameWidth - spinBtn.width) * 0.5, gameHeight * 0.7);
+        spinBtn.eventMode = "static";
+        spinBtn.on("pointerdown", ()=> dispatcher.emit(START_SPIN));
+        app.stage.addChild(spinBtn);
+
+        dispatcher.on(LOCK_UI, ()=>{
+            spinBtn.eventMode = "none";
+            spinBtn.texture = Assets.get("PLAY_DISABLED.png");
+        })
+
+        dispatcher.on(UNLOCK_UI, ()=>{
+            spinBtn.eventMode = "static";
+            spinBtn.texture = Assets.get("PLAY.png");
+        })
     }
 
     function resizeCanvas(): void {
