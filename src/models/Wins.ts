@@ -1,4 +1,3 @@
-// WinsModel.ts
 import { REELSET } from "../const/CFG";
 
 export type WinType = 0 | 2 | 3;

@@ -6,7 +6,6 @@ import { GameController } from "./controllers/GameController";
 import { Wallet } from "./models/Wallet";
 import { Wins } from "./models/Wins";
 import { startBalance } from "./const/CFG";
-import set = gsap.set;
 
 export const gameWidth = 1280;
 export const gameHeight = 720;
