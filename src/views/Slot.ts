@@ -1,6 +1,6 @@
 import { Assets, Container, Sprite } from "pixi.js";
 import { dispatcher } from "../index";
-import { SHOW_WIN, START_SPIN, STOP_SPIN } from "../const/Constants";
+import { REELSET, SHOW_WIN, START_SPIN, STOP_SPIN } from "../const/Constants";
 import { Reel } from "./Reel";
 
 export class Slot extends Container {
@@ -18,10 +18,15 @@ export class Slot extends Container {
         this.reel = new Reel();
         this.addChild(this.reel);
 
+        // this.reel.spin();
+        // setTimeout(() => this.reel.stopOn(6), 4000);
         this.spinBtn = new Sprite(Assets.get("PLAY.png"));
         this.spinBtn.position.set(500, 500);
         this.spinBtn.eventMode = "static";
-        this.spinBtn.on("pointerdown", ()=> this.reel.spin())
+        this.spinBtn.on("pointerdown", ()=> {
+            this.reel.spin()
+            setTimeout(() => this.reel.stop([5, 6, 7]), 3000);
+        });
         this.addChild(this.spinBtn);
 		// this.reels = [];
 		// for (let reelIdx = 0; reelIdx < numReels; reelIdx++) {

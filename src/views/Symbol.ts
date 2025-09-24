@@ -6,16 +6,14 @@ export class Symbol extends Container {
 		super();
 
 		this.img = new Sprite(Assets.get(symId + ".png"))
+        this.img.anchor.set(0, 0);
 		this.addChild(this.img);
 	}
 
-	public setRandomSymbol(): void {
-		// this.setId(this.getRndSymId());
-	}
 
 	public setId(symId: string): void {
 		this.img.texture = Assets.get(symId + ".png");
-	}
+    }
 
 	private getRndSymId(): number {
 		return 1 + Math.floor(Math.random() * 5);
