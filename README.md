@@ -5,6 +5,7 @@
 To build the game I used the following very basic Pixi boilerplate: https://github.com/yordan-kanchelov/pixi-typescript-boilerplate
 It gives me base structure and webpack configuration for easy compilation buids.
 
+# Demo here: https://igordgeorgiev.github.io/slot-task/dist/
 
 About the boilerplate: 
 
