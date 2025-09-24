@@ -4,6 +4,10 @@ I used the following boilerplate: https://github.com/yordan-kanchelov/pixi-types
 
 The rest is build on top
 
+- `npm run start` - should be enough to start the game at localhost:8080
+
+About the boilerplate: 
+
 # Pixi.js TypeScript Boilerplate
 
 A beginner-friendly template for building interactive graphics and games using Pixi.js with TypeScript and Webpack. This boilerplate simplifies the setup process, allowing developers to quickly start creating engaging web experiences.
