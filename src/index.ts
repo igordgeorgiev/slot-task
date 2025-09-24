@@ -1,10 +1,11 @@
 import "./style.css";
 import { Application, Assets, AssetsManifest, EventEmitter, Sprite } from "pixi.js";
 import { Slot } from "./views/Slot";
-import { LOCK_UI, START_SPIN, UNLOCK_UI } from "./const/Events";
+import { FAST_STOP, LOCK_UI, START_SPIN, UNLOCK_UI } from "./const/Events";
 import { GameController } from "./controllers/GameController";
 import { Wallet } from "./models/Wallet";
 import { Wins } from "./models/Wins";
+import { startBalance } from "./const/CFG";
 
 export const gameWidth = 1280;
 export const gameHeight = 720;
@@ -44,28 +45,55 @@ console.log(
         document.body.appendChild(app.canvas);
 
         window.onresize = ()=> resizeCanvas();
-        resizeCanvas();
 
+        initGame();
+        createStartBtn();
+    }
+
+    function initGame(): void {
+        resizeCanvas();
         const slot = new Slot();
+
         app.stage.addChild(slot);
 
-        new GameController(new Wallet(100), slot, new Wins())
+        new GameController(new Wallet(startBalance), slot, new Wins())
+    }
 
-        //Simple spin button
+    function createStartBtn(): void {
         const spinBtn = new Sprite(Assets.get("PLAY.png"));
+
         spinBtn.position.set((gameWidth - spinBtn.width) * 0.5, gameHeight * 0.7);
         spinBtn.eventMode = "static";
         spinBtn.on("pointerdown", ()=> dispatcher.emit(START_SPIN));
         app.stage.addChild(spinBtn);
 
-        dispatcher.on(LOCK_UI, ()=>{
+        const stopBtn = new Sprite(Assets.get("STOP.png"));
+
+        stopBtn.position = spinBtn.position;
+        stopBtn.eventMode = "none";
+        stopBtn.visible = false;
+        stopBtn.on("pointerdown", () => {
+            dispatcher.emit(FAST_STOP);
+            stopBtn.eventMode = "none";
+        });
+
+        app.stage.addChild(stopBtn);
+
+        dispatcher.on(LOCK_UI, (lockStop: boolean)=>{
             spinBtn.eventMode = "none";
             spinBtn.texture = Assets.get("PLAY_DISABLED.png");
+
+            if(lockStop) return;
+
+            stopBtn.visible = true;
+            stopBtn.eventMode = "static";
         })
 
         dispatcher.on(UNLOCK_UI, ()=>{
             spinBtn.eventMode = "static";
             spinBtn.texture = Assets.get("PLAY.png");
+            stopBtn.visible = false;
+            stopBtn.eventMode = "none";
         })
     }
 

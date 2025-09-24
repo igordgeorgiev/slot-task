@@ -14,6 +14,8 @@ export const REELSET = [
     "SYM1","SYM5"
 ];
 
+export const startBalance = 100;
+
 export const spinTime = 3000;
 
 export const moneyStyle: TextStyleOptions = {

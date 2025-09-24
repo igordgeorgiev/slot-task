@@ -175,6 +175,7 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">raw/PLAY.png</key>
             <key type="filename">raw/PLAY_DISABLED.png</key>
+            <key type="filename">raw/STOP.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

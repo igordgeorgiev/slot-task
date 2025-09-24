@@ -4,6 +4,8 @@ import { REELSET } from "../const/CFG";
 export type WinType = 0 | 2 | 3;
 
 export class Wins {
+    private currentResult: { stopPositions: number[]; multi: WinType } | undefined = undefined;
+    
     constructor() {
     }
 
@@ -12,8 +14,18 @@ export class Wins {
         const symbols = this.getSymbols(startIndex);
         const stopPositions = this.windowIndexes(startIndex);
         const multi = this.evaluateWin(symbols);
-
+        
+        this.currentResult = { stopPositions, multi };
+        
         return { stopPositions, multi };
+    }
+    
+    public getCurrentResult(): { stopPositions: number[]; multi: WinType } | undefined {
+        if (!this.currentResult) {
+            return;
+        }
+        
+        return this.currentResult;
     }
 
     private getSymbols(startIndex: number): string[] {

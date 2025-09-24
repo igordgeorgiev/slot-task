@@ -1,14 +1,15 @@
 import { Assets, Container, Graphics, Sprite, Text } from "pixi.js";
 import { dispatcher, gameHeight, gameWidth } from "../index";
-import { SHOW_WIN, STOP_SPIN } from "../const/Events";
+import { SHOW_WIN } from "../const/Events";
 import { Reel } from "./Reel";
 import { balancePrefix, moneyStyle, spinTime, winPrefix } from "../const/CFG";
 
 export class Slot extends Container {
     private reel: Reel = new Reel();
     private reelContainer: Container = new Container();
-    private balanceText: Text = new Text({ text: balancePrefix + 0, style: moneyStyle, });
-    private winsText: Text = new Text({ text: winPrefix + 0, style: moneyStyle, });
+    private balanceText: Text = new Text({ text: balancePrefix + 0, style: moneyStyle });
+    private winsText: Text = new Text({ text: winPrefix + 0, style: moneyStyle });
+    private spinTimeOut: ReturnType<typeof setTimeout> | null = null;
 
     constructor() {
         super();
@@ -19,7 +20,6 @@ export class Slot extends Container {
         this.resizeTxt();
         this.addChild(this.balanceText);
         this.addChild(this.winsText);
-
 
         dispatcher.on(SHOW_WIN, () => {});
     }
@@ -46,11 +46,23 @@ export class Slot extends Container {
         this.reelContainer.mask = mask;
     }
 
-
     public startSpin(stopPositions: number[]): void {
         this.reel.spin();
         console.log("start spin");
-        setTimeout(() => this.reel.stop(stopPositions), spinTime);
+        this.spinTimeOut = setTimeout(() => {
+            this.reel.stop(stopPositions);
+            this.spinTimeOut = null;
+        }, spinTime);
+    }
+
+    public fastStop(stopPositions: number[]): void {
+        if (this.spinTimeOut !== null) {
+            clearTimeout(this.spinTimeOut);
+            this.spinTimeOut = null;
+        }
+
+        this.reel.stop(stopPositions);
+        console.log("fast stop");
     }
 
     public updateBalance(amount: number): void {

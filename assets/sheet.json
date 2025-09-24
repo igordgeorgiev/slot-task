@@ -24,9 +24,17 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":140,"h":396},
 	"sourceSize": {"w":140,"h":396}
 },
+"STOP.png":
+{
+	"frame": {"x":0,"y":766,"w":185,"h":185},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":185},
+	"sourceSize": {"w":185,"h":185}
+},
 "SYM1.png":
 {
-	"frame": {"x":0,"y":766,"w":128,"h":128},
+	"frame": {"x":0,"y":951,"w":128,"h":128},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
@@ -34,7 +42,7 @@
 },
 "SYM2.png":
 {
-	"frame": {"x":128,"y":766,"w":128,"h":128},
+	"frame": {"x":128,"y":951,"w":128,"h":128},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
@@ -42,7 +50,7 @@
 },
 "SYM3.png":
 {
-	"frame": {"x":0,"y":894,"w":128,"h":126},
+	"frame": {"x":0,"y":1079,"w":128,"h":126},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":126},
@@ -50,7 +58,7 @@
 },
 "SYM4.png":
 {
-	"frame": {"x":128,"y":894,"w":128,"h":128},
+	"frame": {"x":128,"y":1079,"w":128,"h":128},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
@@ -58,7 +66,7 @@
 },
 "SYM5.png":
 {
-	"frame": {"x":0,"y":1022,"w":128,"h":128},
+	"frame": {"x":0,"y":1207,"w":128,"h":128},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
@@ -66,7 +74,7 @@
 },
 "SYM6.png":
 {
-	"frame": {"x":128,"y":1022,"w":128,"h":128},
+	"frame": {"x":128,"y":1207,"w":128,"h":128},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
@@ -74,7 +82,7 @@
 },
 "WIN_BG.png":
 {
-	"frame": {"x":0,"y":1150,"w":128,"h":128},
+	"frame": {"x":0,"y":1335,"w":128,"h":128},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
@@ -88,8 +96,8 @@
 	"version": "1.1",
 	"image": "sheet.png",
 	"format": "RGBA8888",
-	"size": {"w":256,"h":1278},
+	"size": {"w":256,"h":1463},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:92c64247b57f05e78dbeef8a1ea0da1c:acf8f8a8f76b0bded21f59f3e1e3573d:9c44ecd7e9a522007eaff2949095bc1d$"
+	"smartupdate": "$TexturePacker:SmartUpdate:022dcf9b7ea769d00faba35c2ee0bd68:be8643709dfe7106dbc5823033944e8f:9c44ecd7e9a522007eaff2949095bc1d$"
 }
 }

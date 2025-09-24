@@ -123,7 +123,7 @@ export class Reel extends Container {
 
         await gsap.to(this, { y: dipY, duration: 0.12, ease: "power1.out" });
         await gsap.to(this, { y: startY, duration: 0.22, ease: "power2.out" });
-
+        console.log("Reel stopped");
         dispatcher.emit(REEL_STOPPED);
     }
 
